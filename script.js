@@ -1,9 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const days = document.querySelectorAll('.day');
-    days.forEach(day => {
-        day.addEventListener('click', () => {
-            day.classList.toggle('expanded');
-        });
-    });
-});
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('https://example.com/fiji-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
 
+header {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+main {
+    padding: 20px;
+}
+
+.day {
+    margin-bottom: 40px;
+}
+
+.entry {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.entry img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    }
+        
