@@ -3,33 +3,550 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiji Travel Diary</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Our Fiji Adventure - September 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .tropical-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -2;
+        }
+
+        .tropical-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="palm" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M25 40 Q15 30 10 25 Q20 20 25 25 Q30 20 40 25 Q35 30 25 40 M25 40 Q35 50 40 55 Q30 60 25 55 Q20 60 10 55 Q15 50 25 40" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23palm)"/></svg>') repeat;
+            opacity: 0.1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+
+        .days-container {
+            display: grid;
+            gap: 30px;
+        }
+
+        .day-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e8f4f8;
+        }
+
+        .day-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .day-date {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .diary-content {
+            margin-bottom: 25px;
+        }
+
+        .diary-entry {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .diary-entry:empty::before {
+            content: "Click here to add your diary entry for this day...";
+            color: #95a5a6;
+            font-style: italic;
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+
+        .diary-entry:focus {
+            outline: none;
+            border-left-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .photo-section {
+            margin-top: 25px;
+        }
+
+        .photo-section h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 20px 15px 15px;
+            font-size: 0.9em;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .floating-save {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-save:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(39, 174, 96, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .day-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .photo-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Fiji Travel Diary</h1>
-        <p>September 1 - September 6, 2023</p>
-    </header>
-    <main>
-        <section id="day1" class="day">
-            <h2>Day 1 - September 1</h2>
-            <div class="entry">
-                <h3>Entry Title</h3>
-                <p>Your diary entry goes here...</p>
-                <img src="photos/photo1.jpg" alt="Photo 1">
+    <div class="tropical-bg"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1>🌺 Our Fiji Adventure 🌺</h1>
+            <p>September 1-6, 2025 • Creating memories in paradise</p>
+        </header>
+
+        <div class="days-container">
+            <div class="day-card">
+                <div class="day-header">
+                    <h2 class="day-title">Day 1</h2>
+                    <span class="day-date">September 1, 2025</span>
+                </div>
+                <div class="diary-content">
+                    <div class="diary-entry" contenteditable="true" data-day="1"></div>
+                </div>
+                <div class="photo-section">
+                    <h3>📸 Today's Photos</h3>
+                    <div class="photo-upload">
+                        <button class="upload-btn" onclick="document.getElementById('photo-input-1').click()">
+                            Add Photos
+                        </button>
+                        <input type="file" id="photo-input-1" class="file-input" accept="image/*" multiple onchange="handlePhotoUpload(1, this)">
+                    </div>
+                    <div class="photo-gallery" id="gallery-1"></div>
+                </div>
             </div>
-        </section>
-        <section id="day2" class="day">
-            <h2>Day 2 - September 2</h2>
-            <div class="entry">
-                <h3>Entry Title</h3>
-                <p>Your diary entry goes here...</p>
-                <img src="photos/photo2.jpg" alt="Photo 2">
+
+            <div class="day-card">
+                <div class="day-header">
+                    <h2 class="day-title">Day 2</h2>
+                    <span class="day-date">September 2, 2025</span>
+                </div>
+                <div class="diary-content">
+                    <div class="diary-entry" contenteditable="true" data-day="2"></div>
+                </div>
+                <div class="photo-section">
+                    <h3>📸 Today's Photos</h3>
+                    <div class="photo-upload">
+                        <button class="upload-btn" onclick="document.getElementById('photo-input-2').click()">
+                            Add Photos
+                        </button>
+                        <input type="file" id="photo-input-2" class="file-input" accept="image/*" multiple onchange="handlePhotoUpload(2, this)">
+                    </div>
+                    <div class="photo-gallery" id="gallery-2"></div>
+                </div>
             </div>
-        </section>
-        <!-- Repeat for Days 3 to 6 -->
-    </main>
-    <script src="script.js"></script>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <h2 class="day-title">Day 3</h2>
+                    <span class="day-date">September 3, 2025</span>
+                </div>
+                <div class="diary-content">
+                    <div class="diary-entry" contenteditable="true" data-day="3"></div>
+                </div>
+                <div class="photo-section">
+                    <h3>📸 Today's Photos</h3>
+                    <div class="photo-upload">
+                        <button class="upload-btn" onclick="document.getElementById('photo-input-3').click()">
+                            Add Photos
+                        </button>
+                        <input type="file" id="photo-input-3" class="file-input" accept="image/*" multiple onchange="handlePhotoUpload(3, this)">
+                    </div>
+                    <div class="photo-gallery" id="gallery-3"></div>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <h2 class="day-title">Day 4</h2>
+                    <span class="day-date">September 4, 2025</span>
+                </div>
+                <div class="diary-content">
+                    <div class="diary-entry" contenteditable="true" data-day="4"></div>
+                </div>
+                <div class="photo-section">
+                    <h3>📸 Today's Photos</h3>
+                    <div class="photo-upload">
+                        <button class="upload-btn" onclick="document.getElementById('photo-input-4').click()">
+                            Add Photos
+                        </button>
+                        <input type="file" id="photo-input-4" class="file-input" accept="image/*" multiple onchange="handlePhotoUpload(4, this)">
+                    </div>
+                    <div class="photo-gallery" id="gallery-4"></div>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <h2 class="day-title">Day 5</h2>
+                    <span class="day-date">September 5, 2025</span>
+                </div>
+                <div class="diary-content">
+                    <div class="diary-entry" contenteditable="true" data-day="5"></div>
+                </div>
+                <div class="photo-section">
+                    <h3>📸 Today's Photos</h3>
+                    <div class="photo-upload">
+                        <button class="upload-btn" onclick="document.getElementById('photo-input-5').click()">
+                            Add Photos
+                        </button>
+                        <input type="file" id="photo-input-5" class="file-input" accept="image/*" multiple onchange="handlePhotoUpload(5, this)">
+                    </div>
+                    <div class="photo-gallery" id="gallery-5"></div>
+                </div>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <h2 class="day-title">Day 6</h2>
+                    <span class="day-date">September 6, 2025</span>
+                </div>
+                <div class="diary-content">
+                    <div class="diary-entry" contenteditable="true" data-day="6"></div>
+                </div>
+                <div class="photo-section">
+                    <h3>📸 Today's Photos</h3>
+                    <div class="photo-upload">
+                        <button class="upload-btn" onclick="document.getElementById('photo-input-6').click()">
+                            Add Photos
+                        </button>
+                        <input type="file" id="photo-input-6" class="file-input" accept="image/*" multiple onchange="handlePhotoUpload(6, this)">
+                    </div>
+                    <div class="photo-gallery" id="gallery-6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="floating-save" onclick="saveAll()" title="Save All Changes">💾</button>
+
+    <script>
+        // Storage for diary entries and photos
+        let diaryData = {
+            entries: {},
+            photos: {}
+        };
+
+        // Load saved data on page load
+        window.addEventListener('load', function() {
+            loadSavedData();
+        });
+
+        // Save diary entries automatically
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('diary-entry')) {
+                const day = e.target.dataset.day;
+                diaryData.entries[day] = e.target.innerHTML;
+                autoSave();
+            }
+        });
+
+        function handlePhotoUpload(day, input) {
+            const files = input.files;
+            const gallery = document.getElementById(`gallery-${day}`);
+            
+            if (!diaryData.photos[day]) {
+                diaryData.photos[day] = [];
+            }
+            
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const photoData = {
+                            src: e.target.result,
+                            name: file.name,
+                            caption: ''
+                        };
+                        
+                        diaryData.photos[day].push(photoData);
+                        addPhotoToGallery(day, photoData, diaryData.photos[day].length - 1);
+                        autoSave();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+            
+            input.value = '';
+        }
+
+        function addPhotoToGallery(day, photoData, index) {
+            const gallery = document.getElementById(`gallery-${day}`);
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item';
+            photoItem.innerHTML = `
+                <img src="${photoData.src}" alt="${photoData.name}">
+                <div class="photo-caption">
+                    <input type="text" placeholder="Add a caption..." 
+                           value="${photoData.caption}"
+                           onchange="updatePhotoCaption(${day}, ${index}, this.value)"
+                           style="background: none; border: none; color: white; width: 100%; outline: none; font-size: 0.9em;">
+                </div>
+            `;
+            gallery.appendChild(photoItem);
+        }
+
+        function updatePhotoCaption(day, index, caption) {
+            if (diaryData.photos[day] && diaryData.photos[day][index]) {
+                diaryData.photos[day][index].caption = caption;
+                autoSave();
+            }
+        }
+
+        function autoSave() {
+            // In a real implementation, this would save to localStorage or send to server
+            console.log('Auto-saving diary data...', diaryData);
+        }
+
+        function saveAll() {
+            // Collect all diary entries
+            const entries = document.querySelectorAll('.diary-entry');
+            entries.forEach(entry => {
+                const day = entry.dataset.day;
+                diaryData.entries[day] = entry.innerHTML;
+            });
+            
+            // Show save confirmation
+            const saveBtn = document.querySelector('.floating-save');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '✅';
+            saveBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+                saveBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            }, 2000);
+            
+            console.log('All data saved!', diaryData);
+        }
+
+        function loadSavedData() {
+            // In a real implementation, this would load from localStorage or server
+            // For now, we'll just initialize empty data
+            for (let day = 1; day <= 6; day++) {
+                if (!diaryData.entries[day]) {
+                    diaryData.entries[day] = '';
+                }
+                if (!diaryData.photos[day]) {
+                    diaryData.photos[day] = [];
+                }
+            }
+        }
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.day-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        });
+    </script>
 </body>
-</html>
+    </html>
